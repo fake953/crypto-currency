@@ -3,7 +3,7 @@ import { CurrencyBitcoin } from "@mui/icons-material";
 
 const NavBar = () => {
   return (
-    <Box paddingBottom={8}>
+    <Box>
       <AppBar>
         <Toolbar>
           <CurrencyBitcoin />
