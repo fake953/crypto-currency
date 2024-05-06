@@ -1,28 +1,10 @@
-import axios from "axios";
+export const CoinList = (currency:string) =>
+  `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`;
 
-export default async function AllAPI() {
-  const options = {
-    method: "GET",
-    url: "https://coinranking1.p.rapidapi.com/coins",
-    params: {
-      referenceCurrencyUuid: "yhjMzLPhuIDl",
-      timePeriod: "24h",
-      "tiers[0]": "1",
-      orderBy: "marketCap",
-      orderDirection: "desc",
-      limit: "50",
-      offset: "0",
-    },
-    headers: {
-      "X-RapidAPI-Key": "90036e5006msh9c507143836a26bp115d86jsn545e41f4f9e8",
-      "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-    },
-  };
-  try {
-    console.log("api sended");
-    const response = await axios.request(options);
-    return response.data.data.coins;
-  } catch (error) {
-    console.error(error);
-  }
-}
+export const SingleCoin = (id:number) =>
+  `https://api.coingecko.com/api/v3/coins/${id}`;
+
+export const HistoricalChart = (id:number, days = 365, currency:string) =>
+  `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
+
+export const TrendingCoins = () => `https://coinranking1.p.rapidapi.com/coins`
