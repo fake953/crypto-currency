@@ -1,32 +1,31 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { TrendingCoins } from "../API/AllAPI";
-import { TrendingCoinsType } from "../interfaces/interface";
+// import { useState, useEffect } from "react";
+// import { TrendingCoins } from "../API/AllAPI";
+import { TrendingCoinsInterface } from "../interfaces/interface";
 import { Box, Typography } from "@mui/material";
 import AliceCarousel from "react-alice-carousel";
+import { useCoinsContext } from "../context/coinsContext";
 
 const Carousel = () => {
-  const [coins, setCoins] = useState<TrendingCoinsType[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const res = async () => {
-      const response = await axios.get(TrendingCoins(), {
-        headers: {
-          "X-RapidAPI-Key":
-            "90036e5006msh9c507143836a26bp115d86jsn545e41f4f9e8",
-          "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-        },
-      });
-      setCoins(response.data.data.coins);
-      setIsLoading(false);
-    };
-    res();
-  }, []);
+  //at the line code bellow type script giving an error but don't worry about it i handeled this error in the home component,happy coding!
+  const { TrendingCoinsType, isLoadingType } = useCoinsContext();
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const res = async () => {
+  //     const response = await axios.get(TrendingCoins(), {
+  //       headers: {
+  //         "X-RapidAPI-Key":
+  //           "90036e5006msh9c507143836a26bp115d86jsn545e41f4f9e8",
+  //         "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
+  //       },
+  //     });
+  //     setCoins(response.data.data.coins);
+  //     setIsLoading(false);
+  //   };
+  //   res();
+  // }, []);
   const itemsFunction = () => {
-    if (isLoading) return;
-    const result = coins?.map((coin) => (
+    if (isLoadingType) return;
+    const result = TrendingCoinsType?.map((coin: TrendingCoinsInterface) => (
       <Box
         style={{
           paddingInline: "10px",
@@ -78,8 +77,8 @@ const Carousel = () => {
       items: 4,
     },
   };
-  console.log(coins);
-  if (isLoading) return <div>hello world</div>;
+  console.log(TrendingCoinsType);
+  if (isLoadingType) return <div>hello world</div>;
   return (
     <Box>
       <AliceCarousel
