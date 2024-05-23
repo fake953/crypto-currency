@@ -1,66 +1,69 @@
 import { createContext, useContext } from "react";
-import { TrendingCoinsInterface } from "../interfaces/interface";
+import {
+  TrendingCoinsInterface,
+  AllNewsInterface,
+} from "../interfaces/interface";
 
-const valueForContextFunc = [
-  {
-    "24hVolume": "string",
-    btcPrice: "string",
-    change: "string",
-    coinrankingUrl: "string",
-    color: "string",
-    contractAddresses: ["string"],
-    iconUrl: "string",
-    listedAt: 1,
-    lowVolume: true,
-    marketCap: "string",
-    name: "string",
-    price: "string",
-    rank: 1,
-    sparkline: ["string"],
-    symbol: "string",
-    tier: 1,
-    uuid: "string",
-  },
-];
-const isLoadingTypeParam: boolean = true;
+// const valueForContextFunc = [
+//   {
+//     "24hVolume": "string",
+//     btcPrice: "string",
+//     change: "string",
+//     coinrankingUrl: "string",
+//     color: "string",
+//     contractAddresses: ["string"],
+//     iconUrl: "string",
+//     listedAt: 1,
+//     lowVolume: true,
+//     marketCap: "string",
+//     name: "string",
+//     price: "string",
+//     rank: 1,
+//     sparkline: ["string"],
+//     symbol: "string",
+//     tier: 1,
+//     uuid: "string",
+//   },
+// ];
+// const isLoadingTypeParam: boolean = true;
 interface contextInterface {
-  TrendingCoinsType: TrendingCoinsInterface[] | undefined;
-  setTrendingCoinsType: (valu: TrendingCoinsInterface[]) => void;
-  isLoadingType: boolean;
-  setIsLoadingType: (valu: boolean) => void;
+  coins: TrendingCoinsInterface[] | undefined;
+  isLoading: boolean;
+  news: AllNewsInterface[];
 }
-const contextDefaultValue: contextInterface = {
-  TrendingCoinsType: [
-    {
-      "24hVolume": "string",
-      btcPrice: "string",
-      change: "string",
-      coinrankingUrl: "string",
-      color: "string",
-      contractAddresses: ["string"],
-      iconUrl: "string",
-      listedAt: 1,
-      lowVolume: true,
-      marketCap: "string",
-      name: "string",
-      price: "string",
-      rank: 1,
-      sparkline: ["string"],
-      symbol: "string",
-      tier: 1,
-      uuid: "string",
-    },
-  ],
-  setTrendingCoinsType: (valueForContextFunc) => {
-    console.log(valueForContextFunc);
-  },
-  isLoadingType: false,
-  setIsLoadingType: (isLoadingTypeParam) => {
-    console.log(isLoadingTypeParam);
-  },
-};
-export const coinsContext =
-  createContext<contextInterface>(contextDefaultValue);
+// const contextDefaultValue: contextInterface = {
+//   TrendingCoinsType: [
+//     {
+//       "24hVolume": "string",
+//       btcPrice: "string",
+//       change: "string",
+//       coinrankingUrl: "string",
+//       color: "string",
+//       contractAddresses: ["string"],
+//       iconUrl: "string",
+//       listedAt: 1,
+//       lowVolume: true,
+//       marketCap: "string",
+//       name: "string",
+//       price: "string",
+//       rank: 1,
+//       sparkline: ["string"],
+//       symbol: "string",
+//       tier: 1,
+//       uuid: "string",
+//     },
+//   ],
+//   // setTrendingCoinsType: (valueForContextFunc) => {
+//   //   console.log(valueForContextFunc);
+//   // },
+//   // isLoadingType: false,
+//   // setIsLoadingType: (isLoadingTypeParam) => {
+//   //   console.log(isLoadingTypeParam);
+//   // },
+// };
+export const coinsContext = createContext<contextInterface | undefined>(
+  undefined
+);
 
 export const useCoinsContext = () => {
   const coinsContextForCustumHook = useContext(coinsContext);

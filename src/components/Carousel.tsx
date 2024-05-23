@@ -7,7 +7,11 @@ import { useCoinsContext } from "../context/coinsContext";
 
 const Carousel = () => {
   //at the line code bellow type script giving an error but don't worry about it i handeled this error in the home component,happy coding!
-  const { TrendingCoinsType, isLoadingType } = useCoinsContext();
+  const { coins, isLoading } = useCoinsContext();
+  function priceFormatter(price: number) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   // useEffect(() => {
   //   setIsLoading(true);
   //   const res = async () => {
@@ -24,8 +28,8 @@ const Carousel = () => {
   //   res();
   // }, []);
   const itemsFunction = () => {
-    if (isLoadingType) return;
-    const result = TrendingCoinsType?.map((coin: TrendingCoinsInterface) => (
+    if (isLoading) return;
+    const result = coins?.map((coin: TrendingCoinsInterface) => (
       <Box
         style={{
           paddingInline: "10px",
@@ -37,31 +41,36 @@ const Carousel = () => {
         }}
       >
         <img
-          src={coin.iconUrl}
+          src={coin.image}
           alt={coin.name}
           style={{ marginBottom: "10px", height: "80px", width: "80px" }}
         />
 
         <Box>
-          <Typography variant="h6"> {coin.symbol} </Typography>
+          <Box display={'flex'} justifyContent={'space-between'} >
+            <Typography variant="body2" component={'span'} paddingRight={1} paddingBottom={0.5}> {coin.symbol} </Typography>
+            {Number(coin.price_change_percentage_24h.toLocaleString()) >= 0 ? (
+              <Typography
+                component={'span'}
+                variant="body2"
+                style={{ color: "green", display: "flex" }}
+              >
+                + {`${coin.price_change_percentage_24h} %`}{" "}
+              </Typography>
+            ) : (
+              <Typography
+                component={'span'}
+                variant="body2"
+                style={{ color: "red", display: "flex" }}
+              >
+                {`${coin.price_change_percentage_24h} %`}
+              </Typography>
+            )}
+          </Box>
           <Typography variant="body2" paddingRight={2}>
-            $ {Number(coin.price).toLocaleString()}
+            $ {priceFormatter(coin.current_price)}
           </Typography>
-          {Number(coin.change) >= 0 ? (
-            <Typography
-              variant="body2"
-              style={{ color: "green", display: "flex" }}
-            >
-              + {coin.change}{" "}
-            </Typography>
-          ) : (
-            <Typography
-              variant="body2"
-              style={{ color: "red", display: "flex" }}
-            >
-              {coin.change}
-            </Typography>
-          )}
+
         </Box>
       </Box>
     ));
@@ -77,8 +86,7 @@ const Carousel = () => {
       items: 4,
     },
   };
-  console.log(TrendingCoinsType);
-  if (isLoadingType) return <div>hello world</div>;
+  if (isLoading) return <div>hello world</div>;
   return (
     <Box>
       <AliceCarousel

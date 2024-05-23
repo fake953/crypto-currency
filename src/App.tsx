@@ -2,9 +2,15 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { TrendingCoinsInterface } from "./interfaces/interface";
+import {
+  TrendingCoinsInterface,
+  AllNewsInterface,
+} from "./interfaces/interface";
+import { CoinList, PopularNews } from "./API/AllAPI";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import axios from "axios";
 
 import { coinsContext } from "./context/coinsContext";
 import "./app.css";
@@ -18,22 +24,42 @@ const darkTheme = createTheme({
   },
 });
 const App = () => {
-  const [coins, setCoins] = useState<TrendingCoinsInterface[]>();
+  const [coins, setCoins] = useState<TrendingCoinsInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const setTrendingCoinsType = (value: TrendingCoinsInterface[]) => {
-    setCoins(value);
-  };
-  const setIsLoadingType = (value: boolean) => {
-    setIsLoading(value);
-  };
+  const [news, setNews] = useState<AllNewsInterface[]>([]);
+  useEffect(() => {
+    console.log("api sended");
+
+    setIsLoading(true);
+    const res = async () => {
+      const response = await axios.get(CoinList("USD"));
+      setIsLoading(false);
+      setCoins(response.data);
+      console.log(response.data);
+    };
+    res();
+  }, []);
+  useEffect(() => {
+    console.log("news api sended");
+
+    const res = async () => {
+      const response = await axios.get(PopularNews(), {
+        headers: {
+          "X-RapidAPI-Key": `${process.env.REACT_APP_NEWS_API_KEY}`,
+          "X-RapidAPI-Host": "crypto-news16.p.rapidapi.com",
+        },
+      });
+      setNews(response.data);
+    };
+    res();
+  }, []);
 
   return (
     <coinsContext.Provider
       value={{
-        TrendingCoinsType: coins,
-        setTrendingCoinsType: setTrendingCoinsType,
-        isLoadingType: isLoading,
-        setIsLoadingType: setIsLoadingType,
+        isLoading,
+        coins,
+        news,
       }}
     >
       <ThemeProvider theme={darkTheme}>
