@@ -4,4 +4,11 @@
   padding: 0px;
   /* background: #141414;
   color: white; */
-} 
+}
+a {
+  text-decoration: none;
+  color: #90caf9;
+}
+.link {
+  all: unset;
+}

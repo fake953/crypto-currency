@@ -8,10 +8,13 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Box,
+  Typography,
 } from "@mui/material";
 
 import { TrendingCoinsInterface } from "../interfaces/interface";
 import { useCoinsContext } from "../context/coinsContext";
+import { NavLink } from "react-router-dom";
 
 export default function CoinsTable() {
   const [tableCoins, setTableCoins] = useState<TrendingCoinsInterface[]>([]);
@@ -32,66 +35,75 @@ export default function CoinsTable() {
   }, [coins]);
   if (!coins) return;
   return (
-    <TableContainer style={{ paddingTop: "10px" }}>
-      <Table>
-        <TableHead>
-          <TextField
-            variant="outlined"
-            onChange={(
-              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-            ) => {
-              handelSearch(e.target.value);
-            }}
-            label="search for currency"
-          />
-          <TableRow>
-            <TableCell align="left">Rank</TableCell>
-            <TableCell align="left">coin name</TableCell>
-            <TableCell align="left">24 %</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Market Cap</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableCoins.map((coin: TrendingCoinsInterface) => (
-            <TableRow hover style={{ marginTop: "5px" }} key={coin.name}>
-              <TableCell>{coin.market_cap_rank}</TableCell>
-              <TableCell>
-                <img
-                  style={{
-                    height: "20px",
-                    width: "20px",
-                    marginRight: "7px",
-                  }}
-                  src={coin.image}
-                  alt=""
-                />
-                {coin.name}
-              </TableCell>
-              {Number(coin.price_change_percentage_24h.toLocaleString()) >=
-              0 ? (
-                <TableCell
-                  style={{
-                    color: "green",
-                  }}
-                >
-                  + {`${coin.price_change_percentage_24h} %`}{" "}
-                </TableCell>
-              ) : (
-                <TableCell
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  {`${coin.price_change_percentage_24h} %`}
-                </TableCell>
-              )}
-              <TableCell>$ {priceFormatter(coin.current_price)}</TableCell>
-              <TableCell>{coin.market_cap}</TableCell>
+    <Box paddingInline={2}>
+      <Typography paddingTop={3} variant="h4" textAlign={"center"}>
+        Crypto Curencies by Market Cap
+      </Typography>
+      <TextField
+        fullWidth
+        variant="outlined"
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          handelSearch(e.target.value);
+        }}
+        label="search for currency"
+      />
+      <TableContainer style={{ paddingTop: "10px" }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">Rank</TableCell>
+              <TableCell align="left">coin name</TableCell>
+              <TableCell align="left">24 %</TableCell>
+              <TableCell align="left">Price</TableCell>
+              <TableCell align="left">Market Cap</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {tableCoins.map((coin: TrendingCoinsInterface) => (
+              <TableRow hover style={{ marginTop: "5px" }} key={coin.name}>
+                <TableCell>{coin.market_cap_rank}</TableCell>
+                <TableCell>
+                  <NavLink to={`coins/${coin.id}`}>
+                    <img
+                      style={{
+                        height: "20px",
+                        width: "20px",
+                        marginRight: "7px",
+                      }}
+                      src={coin.image}
+                      alt=""
+                    />
+                    {coin.name}
+                  </NavLink>
+                </TableCell>
+                {Number(coin.price_change_percentage_24h.toLocaleString()) >=
+                0 ? (
+                  <TableCell
+                    style={{
+                      color: "green",
+                    }}
+                  >
+                    + {`${coin.price_change_percentage_24h} %`}{" "}
+                  </TableCell>
+                ) : (
+                  <TableCell
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {`${coin.price_change_percentage_24h} %`}
+                  </TableCell>
+                )}
+                <TableCell>$ {priceFormatter(coin.current_price)}</TableCell>
+                <TableCell>{coin.market_cap}</TableCell>
+              </TableRow>
+              // </NavLink>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

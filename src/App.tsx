@@ -28,28 +28,23 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [news, setNews] = useState<AllNewsInterface[]>([]);
   useEffect(() => {
-    console.log("api sended");
-
     setIsLoading(true);
     const res = async () => {
-      const response = await axios.get(CoinList("USD"));
+      const { data } = await axios.get(CoinList());
       setIsLoading(false);
-      setCoins(response.data);
-      console.log(response.data);
+      setCoins(data);
     };
     res();
   }, []);
   useEffect(() => {
-    console.log("news api sended");
-
     const res = async () => {
-      const response = await axios.get(PopularNews(), {
+      const { data } = await axios.get(PopularNews(), {
         headers: {
-          "X-RapidAPI-Key": `${process.env.REACT_APP_NEWS_API_KEY}`,
+          "X-RapidAPI-Key": `${import.meta.env.VITE_REACT_APP_NEWS_API_KEY}`,
           "X-RapidAPI-Host": "crypto-news16.p.rapidapi.com",
         },
       });
-      setNews(response.data);
+      setNews(data);
     };
     res();
   }, []);

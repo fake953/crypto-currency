@@ -1,5 +1,4 @@
-// import { useState, useEffect } from "react";
-// import { TrendingCoins } from "../API/AllAPI";
+import { NavLink } from "react-router-dom";
 import { TrendingCoinsInterface } from "../interfaces/interface";
 import { Box, Typography } from "@mui/material";
 import AliceCarousel from "react-alice-carousel";
@@ -30,49 +29,63 @@ const Carousel = () => {
   const itemsFunction = () => {
     if (isLoading) return;
     const result = coins?.map((coin: TrendingCoinsInterface) => (
-      <Box
-        style={{
-          paddingInline: "10px",
-          marginInline: "20px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+      <NavLink
+        style={{ color: "white", textDecoration: "none" }}
+        to={`coins/${coin.id}`}
       >
-        <img
-          src={coin.image}
-          alt={coin.name}
-          style={{ marginBottom: "10px", height: "80px", width: "80px" }}
-        />
+        <Box
+          style={{
+            paddingInline: "10px",
+            marginInline: "20px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={coin.image}
+            alt={coin.name}
+            style={{ marginBottom: "10px", height: "80px", width: "80px" }}
+          />
 
-        <Box>
-          <Box display={'flex'} justifyContent={'space-between'} >
-            <Typography variant="body2" component={'span'} paddingRight={1} paddingBottom={0.5}> {coin.symbol} </Typography>
-            {Number(coin.price_change_percentage_24h.toLocaleString()) >= 0 ? (
+          <Box>
+            <Box display={"flex"} justifyContent={"space-between"}>
               <Typography
-                component={'span'}
                 variant="body2"
-                style={{ color: "green", display: "flex" }}
+                component={"span"}
+                paddingRight={1}
+                paddingBottom={0.5}
               >
-                + {`${coin.price_change_percentage_24h} %`}{" "}
+                {" "}
+                {coin.symbol}{" "}
               </Typography>
-            ) : (
-              <Typography
-                component={'span'}
-                variant="body2"
-                style={{ color: "red", display: "flex" }}
-              >
-                {`${coin.price_change_percentage_24h} %`}
-              </Typography>
-            )}
+              {Number(coin.price_change_percentage_24h.toLocaleString()) >=
+              0 ? (
+                <Typography
+                  component={"span"}
+                  variant="body2"
+                  style={{ color: "green", display: "flex" }}
+                >
+                  + {`${coin.price_change_percentage_24h} %`}{" "}
+                </Typography>
+              ) : (
+                <Typography
+                  component={"span"}
+                  variant="body2"
+                  style={{ color: "red", display: "flex" }}
+                >
+                  {`${coin.price_change_percentage_24h} %`}
+                </Typography>
+              )}
+            </Box>
+
+            <Typography variant="body2" paddingRight={2}>
+              $ {priceFormatter(coin.current_price)}
+            </Typography>
           </Box>
-          <Typography variant="body2" paddingRight={2}>
-            $ {priceFormatter(coin.current_price)}
-          </Typography>
-
         </Box>
-      </Box>
+      </NavLink>
     ));
     return result;
   };

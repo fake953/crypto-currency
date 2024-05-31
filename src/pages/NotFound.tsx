@@ -11,7 +11,14 @@ function NotFound() {
       <ArrowBack />
       <Link
         to={"/"}
-        style={{ color: "black", paddingLeft: "7px", paddingBottom: "10px" }}
+        style={{
+          color: "white",
+          textDecoration: "none",
+          fontStyle: "normal",
+          paddingLeft: "7px",
+          paddingBottom: "10px",
+          textUnderlineOffset: "none",
+        }}
       >
         {" "}
         Back to Home
