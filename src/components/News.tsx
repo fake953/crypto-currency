@@ -14,7 +14,6 @@ import {
 export const News = () => {
   const { news } = useCoinsContext();
   if (news.length <= 0) return;
-  console.log(news);
   const newsTemplate = () => {
     const res = news.map((artical: AllNewsInterface) => (
       <Box marginInline={1} marginTop={3}>
@@ -49,7 +48,13 @@ export const News = () => {
     0: {
       items: 1,
     },
-    512: {
+    480: {
+      items: 2,
+    },
+    768: {
+      items: 3,
+    },
+    1024: {
       items: 4,
     },
   };

@@ -6,7 +6,7 @@ import parse from "html-react-parser";
 import { TrendingCoinsInterface } from "../../interfaces/interface";
 const CoinDescribtion = ({ coin, coins }) => {
   const [chosenCoin, setChosenCoin] = useState<TrendingCoinsInterface>();
-  function priceFormatter(price: number) {
+  function priceFormatter(price: string | number) {
     if (!price) return;
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -20,11 +20,15 @@ const CoinDescribtion = ({ coin, coins }) => {
   }, [coin, coins]);
   if (!coins) return <Typography paddingTop={15}>Loading</Typography>;
   return (
-    <Box paddingLeft={3} marginRight={3} paddingRight={2} borderRight={1}>
+    <Box paddingLeft={3} paddingRight={2} borderRight={0}>
       <Box display={"flex"} justifyContent={"center"}>
-        <Box>
-          <img src={coin?.image?.large} style={{ width: "200px" }} alt="" />
-          <Typography textAlign={"center"} variant="h5">
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          flexDirection={"column"}
+        >
+          <img src={coin?.image?.large} width={"50%"} alt="" />
+          <Typography paddingLeft={3} variant="h5">
             {coin?.name}
           </Typography>
         </Box>
@@ -35,7 +39,7 @@ const CoinDescribtion = ({ coin, coins }) => {
             Current Price :
           </Typography>
           <Typography variant="body1" component={"span"}>
-            {priceFormatter(chosenCoin?.current_price)} $
+            {priceFormatter(Number(chosenCoin?.current_price))} $
           </Typography>
         </Box>
         <Box>
@@ -43,7 +47,7 @@ const CoinDescribtion = ({ coin, coins }) => {
             Market Cap :
           </Typography>
           <Typography variant="body1" component={"span"}>
-            {priceFormatter(chosenCoin?.market_cap)}
+            {priceFormatter(Number(chosenCoin?.market_cap))}
           </Typography>
         </Box>
       </Box>
@@ -60,4 +64,3 @@ const CoinDescribtion = ({ coin, coins }) => {
 };
 
 export default CoinDescribtion;
-//.split(".")[0]

@@ -68,9 +68,7 @@ export const coinsContext = createContext<contextInterface | undefined>(
 export const useCoinsContext = () => {
   const coinsContextForCustumHook = useContext(coinsContext);
   if (coinsContextForCustumHook === undefined) {
-    console.error("something in coinsContext went wrong");
-    //  throw new Error("something in coinsContext went wrong");
-    return;
+    throw new Error("something in coinsContext went wrong");
   }
 
   return coinsContextForCustumHook;

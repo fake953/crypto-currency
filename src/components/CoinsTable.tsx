@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
 import {
   TableContainer,
   Table,
@@ -10,6 +9,7 @@ import {
   TextField,
   Box,
   Typography,
+  Skeleton,
 } from "@mui/material";
 
 import { TrendingCoinsInterface } from "../interfaces/interface";
@@ -24,16 +24,15 @@ export default function CoinsTable() {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   const handelSearch = (value: string) => {
-    const speacialCoins = coins.filter((coin: TrendingCoinsInterface) =>
+    const speacialCoins = coins?.filter((coin: TrendingCoinsInterface) =>
       coin.name.toLowerCase().includes(value.toLowerCase())
     );
     setTableCoins(speacialCoins);
-    console.log(speacialCoins);
   };
   useEffect(() => {
     setTableCoins(coins);
   }, [coins]);
-  if (!coins) return;
+  if (!coins) return <Skeleton height={500} width={"100%"} />;
   return (
     <Box paddingInline={2}>
       <Typography paddingTop={3} variant="h4" textAlign={"center"}>
@@ -49,11 +48,10 @@ export default function CoinsTable() {
         }}
         label="search for currency"
       />
-      <TableContainer style={{ paddingTop: "10px" }}>
+      <TableContainer style={{ paddingTop: "10px", fontSize: "10px" }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Rank</TableCell>
               <TableCell align="left">coin name</TableCell>
               <TableCell align="left">24 %</TableCell>
               <TableCell align="left">Price</TableCell>
@@ -63,13 +61,12 @@ export default function CoinsTable() {
           <TableBody>
             {tableCoins.map((coin: TrendingCoinsInterface) => (
               <TableRow hover style={{ marginTop: "5px" }} key={coin.name}>
-                <TableCell>{coin.market_cap_rank}</TableCell>
                 <TableCell>
                   <NavLink to={`coins/${coin.id}`}>
                     <img
                       style={{
-                        height: "20px",
-                        width: "20px",
+                        height: "3%",
+                        width: "3%",
                         marginRight: "7px",
                       }}
                       src={coin.image}

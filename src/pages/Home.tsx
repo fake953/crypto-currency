@@ -1,5 +1,5 @@
 //imported mui styling components section
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 //imported hooks section
 import { useCoinsContext } from "../context/coinsContext";
@@ -8,16 +8,14 @@ import Carousel from "../components/Carousel";
 import CoinsTable from "../components/CoinsTable";
 import { News } from "../components/News";
 
+import LoadingHome from "../components/LoadingHome";
+
 function Home() {
   //at the line code bellow type script giving an error but don't worry about it i handeled this error in the home component,happy coding!
   const { isLoading } = useCoinsContext();
-
+  //
   if (isLoading) {
-    return (
-      <Typography variant="h2" paddingTop={15} textAlign={"center"}>
-        Loading...
-      </Typography>
-    );
+    return <LoadingHome />;
   }
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>

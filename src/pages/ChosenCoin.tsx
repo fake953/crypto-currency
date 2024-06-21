@@ -17,13 +17,13 @@ const ChosenCoin = () => {
   const [chartData, setChartData] = useState();
   const [chartTime, setChartTime] = useState(365);
   const Params = useParams<{ coinId: string }>();
-  const chartChangerFunc = (value) => {
+  const chartChangerFunc = (value: number) => {
     setChartTime(value);
   };
   useEffect(() => {
     const res = async () => {
       try {
-        const { data } = await axios.get(SingleCoin(Params.coinId));
+        const { data } = await axios.get(SingleCoin(String(Params.coinId)));
         setCoin(data);
       } catch (error) {
         console.log(error);
@@ -35,10 +35,9 @@ const ChosenCoin = () => {
     const res = async () => {
       try {
         const { data } = await axios.get(
-          HistoricalChart(Params.coinId, chartTime)
+          HistoricalChart(String(Params.coinId), chartTime)
         );
         setChartData(data.prices);
-        console.log(data.prices);
       } catch (error) {
         console.log(error);
       }
@@ -46,13 +45,13 @@ const ChosenCoin = () => {
     res();
   }, [Params.coinId, chartTime]);
 
-  return coin && coins && chartData ? (
+  return coin && coins ? (
     <Box paddingTop={10}>
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <CoinDescribtion coins={coins} coin={coin} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={6} lg={8}>
           <ChosenCoinChart
             chartTime={chartTime}
             chartChangerFunc={chartChangerFunc}

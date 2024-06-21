@@ -11,3 +11,5 @@ export const TrendingCoins = () => `https://coinranking1.p.rapidapi.com/coins`;
 
 export const PopularNews = () =>
   "https://crypto-news16.p.rapidapi.com/news/coindesk";
+// export const Exchanges = () =>
+//   "https://pro-api.coinmarketcap.com/v1/exchange/info";
