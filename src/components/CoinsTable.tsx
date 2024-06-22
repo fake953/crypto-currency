@@ -17,7 +17,9 @@ import { useCoinsContext } from "../context/coinsContext";
 import { NavLink } from "react-router-dom";
 
 export default function CoinsTable() {
-  const [tableCoins, setTableCoins] = useState<TrendingCoinsInterface[]|undefined>([]);
+  const [tableCoins, setTableCoins] = useState<
+    TrendingCoinsInterface[] | undefined
+  >([]);
   //at the line code bellow type script giving an error but don't worry about it i handeled this error in the home component,happy coding!
   const { coins } = useCoinsContext();
   function priceFormatter(price: number) {
@@ -65,8 +67,8 @@ export default function CoinsTable() {
                   <NavLink to={`coins/${coin.id}`}>
                     <img
                       style={{
-                        height: "3%",
-                        width: "3%",
+                        height: "30px",
+                        width: "30px",
                         marginRight: "7px",
                       }}
                       src={coin.image}
