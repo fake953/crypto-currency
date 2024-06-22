@@ -30,21 +30,29 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
     const res = async () => {
-      const { data } = await axios.get(CoinList());
-      setIsLoading(false);
-      setCoins(data);
+      try {
+        const { data } = await axios.get(CoinList());
+        setIsLoading(false);
+        setCoins(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     res();
   }, []);
   useEffect(() => {
     const res = async () => {
-      const { data } = await axios.get(PopularNews(), {
-        headers: {
-          "X-RapidAPI-Key": `${import.meta.env.VITE_REACT_APP_NEWS_API_KEY}`,
-          "X-RapidAPI-Host": "crypto-news16.p.rapidapi.com",
-        },
-      });
-      setNews(data);
+      try {
+        const { data } = await axios.get(PopularNews(), {
+          headers: {
+            "X-RapidAPI-Key": `90036e5006msh9c507143836a26bp115d86jsn545e41f4f9e8`,
+            "X-RapidAPI-Host": "crypto-news16.p.rapidapi.com",
+          },
+        });
+        setNews(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     res();
   }, []);

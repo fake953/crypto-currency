@@ -1,3 +1,4 @@
+import { Prop } from "../../interfaces/interface";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -39,12 +40,14 @@ const chartChangerValue = [
     time: 365,
   },
 ];
+
 export default function ChosenCoinChart({
   chartTime,
   chartChangerFunc,
   chartData,
-}) {
+}: Prop) {
   if (!chartData) return <Skeleton height={500} width={"100%"} />;
+
   const options = {
     elements: {
       point: {
@@ -65,7 +68,7 @@ export default function ChosenCoinChart({
     },
   };
 
-  const labels = chartData.map((coin) => {
+  const labels = chartData.map((coin: number[]) => {
     const date = new Date(coin[0]);
     const time =
       date.getHours() > 12

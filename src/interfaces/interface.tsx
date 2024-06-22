@@ -32,3 +32,9 @@ export interface AllNewsInterface {
   title: string;
   url: string;
 }
+export type A =number[]
+export type Prop={
+  chartTime:number;
+  chartChangerFunc:(value:number)=>void;
+  chartData:A[]
+}

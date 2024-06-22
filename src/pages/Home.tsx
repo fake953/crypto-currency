@@ -11,7 +11,6 @@ import { News } from "../components/News";
 import LoadingHome from "../components/LoadingHome";
 
 function Home() {
-  //at the line code bellow type script giving an error but don't worry about it i handeled this error in the home component,happy coding!
   const { isLoading } = useCoinsContext();
   //
   if (isLoading) {

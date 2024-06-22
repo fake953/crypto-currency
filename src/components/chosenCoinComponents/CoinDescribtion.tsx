@@ -2,9 +2,22 @@ import { Box, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import parse from "html-react-parser";
-
+interface forCoin {
+  id: string;
+  image: {
+    large: string;
+  };
+  name: string;
+  description: {
+    en: string;
+  };
+}
+type CoinDescribtionProp = {
+  coin: forCoin;
+  coins: TrendingCoinsInterface[];
+};
 import { TrendingCoinsInterface } from "../../interfaces/interface";
-const CoinDescribtion = ({ coin, coins }) => {
+const CoinDescribtion = ({ coin, coins }: CoinDescribtionProp) => {
   const [chosenCoin, setChosenCoin] = useState<TrendingCoinsInterface>();
   function priceFormatter(price: string | number) {
     if (!price) return;
@@ -15,7 +28,9 @@ const CoinDescribtion = ({ coin, coins }) => {
     return parse(doc);
   }
   useEffect(() => {
-    const filteredCoin = coins.filter((currency) => currency.id === coin.id);
+    const filteredCoin = coins.filter(
+      (currency: TrendingCoinsInterface) => currency.id === coin.id
+    );
     setChosenCoin(filteredCoin[0]);
   }, [coin, coins]);
   if (!coins) return <Typography paddingTop={15}>Loading</Typography>;

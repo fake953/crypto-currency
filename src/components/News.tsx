@@ -15,8 +15,8 @@ export const News = () => {
   const { news } = useCoinsContext();
   if (news.length <= 0) return;
   const newsTemplate = () => {
-    const res = news.map((artical: AllNewsInterface) => (
-      <Box marginInline={1} marginTop={3}>
+    const res = news.map((artical: AllNewsInterface,i:number) => (
+      <Box key={i} marginInline={1} marginTop={3}>
         <Card>
           <CardContent style={{ marginTop: "-1px" }}>
             <Typography variant="h6">{artical.title}</Typography>

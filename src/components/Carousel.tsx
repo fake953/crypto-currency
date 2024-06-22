@@ -10,26 +10,11 @@ const Carousel = () => {
   function priceFormatter(price: number) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   const res = async () => {
-  //     const response = await axios.get(TrendingCoins(), {
-  //       headers: {
-  //         "X-RapidAPI-Key":
-  //           "90036e5006msh9c507143836a26bp115d86jsn545e41f4f9e8",
-  //         "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-  //       },
-  //     });
-  //     setCoins(response.data.data.coins);
-  //     setIsLoading(false);
-  //   };
-  //   res();
-  // }, []);
   const itemsFunction = () => {
     if (isLoading) return;
     const result = coins?.map((coin: TrendingCoinsInterface) => (
       <NavLink
+            key={coin.id}
         style={{ color: "white", textDecoration: "none" }}
         to={`coins/${coin.id}`}
       >
