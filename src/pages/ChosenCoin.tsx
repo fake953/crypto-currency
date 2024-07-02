@@ -15,7 +15,7 @@ import ChosenCoinChart from "../components/chosenCoinComponents/ChosenCoinChart"
 const ChosenCoin = () => {
   const { coins } = useCoinsContext();
   const [coin, setCoin] = useState();
-  const [chartData, setChartData] = useState<A[]>([[1,1]]);
+  const [chartData, setChartData] = useState<A[]>([[1, 1]]);
   const [chartTime, setChartTime] = useState(365);
   const Params = useParams<{ coinId: string }>();
   const chartChangerFunc = (value: number) => {
@@ -25,7 +25,6 @@ const ChosenCoin = () => {
     const res = async () => {
       try {
         const { data } = await axios.get(SingleCoin(String(Params.coinId)));
-        console.log(data);
         setCoin(data);
       } catch (error) {
         console.log(error);

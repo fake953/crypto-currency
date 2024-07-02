@@ -71,7 +71,7 @@ const CoinDescribtion = ({ coin, coins }: CoinDescribtionProp) => {
           About {coin?.name}:{" "}
         </Typography>
         <Typography variant="body1" component={"span"}>
-          {documentFormatter(coin?.description?.en)}
+          {documentFormatter(coin?.description?.en?.split(". ")[0])}
         </Typography>
       </Box>
     </Box>
