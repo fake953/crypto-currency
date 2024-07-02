@@ -9,11 +9,11 @@ import { SingleCoin, HistoricalChart } from "../API/AllAPI";
 import { useCoinsContext } from "../context/coinsContext";
 
 import axios from "axios";
-import CoinDescribtion from "../components/chosenCoinComponents/CoinDescribtion";
+import CoinDescription from "../components/chosenCoinComponents/CoinDescription";
 import ChosenCoinChart from "../components/chosenCoinComponents/ChosenCoinChart";
 
 const ChosenCoin = () => {
-  const { coins } = useCoinsContext();
+  const { coins, currency } = useCoinsContext();
   const [coin, setCoin] = useState();
   const [chartData, setChartData] = useState<A[]>([[1, 1]]);
   const [chartTime, setChartTime] = useState(365);
@@ -36,7 +36,7 @@ const ChosenCoin = () => {
     const res = async () => {
       try {
         const { data } = await axios.get(
-          HistoricalChart(String(Params.coinId), chartTime)
+          HistoricalChart(String(Params.coinId), chartTime, currency)
         );
         setChartData(data.prices);
       } catch (error) {
@@ -50,7 +50,7 @@ const ChosenCoin = () => {
     <Box paddingTop={10}>
       <Grid container>
         <Grid item xs={12} md={6} lg={4}>
-          <CoinDescribtion coins={coins} coin={coin} />
+          <CoinDescription coins={coins} coin={coin} />
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <ChosenCoinChart

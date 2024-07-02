@@ -25,10 +25,19 @@ export default function CoinsTable() {
     TrendingCoinsInterface[] | undefined
   >([]);
   //at the line code bellow type script giving an error but don't worry about it i handled this error in the home component,happy coding!
-  const { coins } = useCoinsContext();
-  function priceFormatter(price: number) {
+  const { coins, currency } = useCoinsContext();
+  const priceFormatter = (price: number) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+  };
+  const CurrencySymbol = () => {
+    if (currency === "GBP") {
+      return "£";
+    } else if (currency === "EUR") {
+      return "€";
+    } else {
+      return "$";
+    }
+  };
   const handelSearch = (value: string) => {
     if (page !== 1) {
       setPageManager(page);
@@ -126,7 +135,10 @@ export default function CoinsTable() {
                       {`${coin.price_change_percentage_24h} %`}
                     </TableCell>
                   )}
-                  <TableCell>$ {priceFormatter(coin.current_price)}</TableCell>
+                  <TableCell>
+                    {CurrencySymbol()} {""}
+                    {priceFormatter(coin.current_price)}
+                  </TableCell>
                   <TableCell>{coin.market_cap}</TableCell>
                 </TableRow>
               ))}

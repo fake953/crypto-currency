@@ -24,6 +24,7 @@ const darkTheme = createTheme({
   },
 });
 const App = () => {
+  const [currency, setCurrency] = useState<string>("USD");
   const [coins, setCoins] = useState<TrendingCoinsInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [news, setNews] = useState<AllNewsInterface[]>([]);
@@ -31,7 +32,7 @@ const App = () => {
     setIsLoading(true);
     const res = async () => {
       try {
-        const { data } = await axios.get(CoinList());
+        const { data } = await axios.get(CoinList(currency));
         setIsLoading(false);
         setCoins(data);
       } catch (error) {
@@ -39,7 +40,7 @@ const App = () => {
       }
     };
     res();
-  }, []);
+  }, [currency]);
   useEffect(() => {
     const res = async () => {
       try {
@@ -63,11 +64,12 @@ const App = () => {
         isLoading,
         coins,
         news,
+        currency,
       }}
     >
       <ThemeProvider theme={darkTheme}>
         <CssBaseline>
-          <NavBar />
+          <NavBar setCurrency={setCurrency} />
           <RouterProvider router={router} />
         </CssBaseline>
       </ThemeProvider>

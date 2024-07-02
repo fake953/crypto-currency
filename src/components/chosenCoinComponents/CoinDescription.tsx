@@ -12,21 +12,32 @@ interface forCoin {
     en: string;
   };
 }
-type CoinDescribtionProp = {
+type CoinDescriptionProp = {
   coin: forCoin;
   coins: TrendingCoinsInterface[];
 };
 import { TrendingCoinsInterface } from "../../interfaces/interface";
-const CoinDescribtion = ({ coin, coins }: CoinDescribtionProp) => {
+import { useCoinsContext } from "../../context/coinsContext";
+const CoinDescription = ({ coin, coins }: CoinDescriptionProp) => {
+  const { currency } = useCoinsContext();
   const [chosenCoin, setChosenCoin] = useState<TrendingCoinsInterface>();
-  function priceFormatter(price: string | number) {
+  const CurrencySymbol = () => {
+    if (currency === "GBP") {
+      return "£";
+    } else if (currency === "EUR") {
+      return "€";
+    } else {
+      return "$";
+    }
+  };
+  const priceFormatter = (price: string | number) => {
     if (!price) return;
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-  function documentFormatter(doc: string) {
+  };
+  const documentFormatter = (doc: string) => {
     if (!doc) return;
     return parse(doc);
-  }
+  };
   useEffect(() => {
     const filteredCoin = coins.filter(
       (currency: TrendingCoinsInterface) => currency.id === coin.id
@@ -54,7 +65,8 @@ const CoinDescribtion = ({ coin, coins }: CoinDescribtionProp) => {
             Current Price :
           </Typography>
           <Typography variant="body1" component={"span"}>
-            {priceFormatter(Number(chosenCoin?.current_price))} $
+            {priceFormatter(Number(chosenCoin?.current_price))}{" "}
+            {CurrencySymbol()}
           </Typography>
         </Box>
         <Box>
@@ -78,4 +90,4 @@ const CoinDescribtion = ({ coin, coins }: CoinDescribtionProp) => {
   );
 };
 
-export default CoinDescribtion;
+export default CoinDescription;
